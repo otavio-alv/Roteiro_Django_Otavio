@@ -9,6 +9,9 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nome
 
+class Tag(models.Model):                                        
+    nome = models.SlugField(max_length=30, unique=True)
+
 class Mensagem(models.Model):
     titulo = models.CharField(max_length=120)
     conteudo = models.TextField()
@@ -18,6 +21,11 @@ class Mensagem(models.Model):
         Categoria,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
+        related_name="mensagens",
+    )
+    tags = models.ManyToManyField(                              
+        Tag,
         blank=True,
         related_name="mensagens",
     )
